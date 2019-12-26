@@ -1,7 +1,7 @@
 require_relative 'lib/bsync/version'
 
 Gem::Specification.new do |spec|
-    spec.name          = "bsync"
+    spec.name          = "bdsync"
     spec.version       = Bsync::VERSION
     spec.authors       = ["Xia Xiongjun"]
     spec.email         = ["xxjapp@gmail.com"]
