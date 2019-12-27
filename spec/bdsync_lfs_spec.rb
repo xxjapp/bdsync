@@ -51,4 +51,22 @@ RSpec.describe Bdsync do
         # check
         expect(File.exist? @local_dir).to eq(false)
     end
+
+    it "lfs: synchronized directory removed from local should also removed from remote" do
+        # setup
+        FileUtils.mkdir_p @remote_dir
+
+        # test
+        @bdsync.synchronize
+
+        # check
+        expect(File.directory? @local_dir).to eq(true)
+
+        # test
+        FileUtils.rm_rf @local_dir
+        @bdsync.synchronize
+
+        # check
+        expect(File.exist? @remote_dir).to eq(false)
+    end
 end

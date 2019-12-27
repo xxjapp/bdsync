@@ -87,7 +87,14 @@ module Bdsync
 
             next_level_dirs.sort.each { |path, remote|
                 handle_remote_entry remote, path, :directory
-                traverse_remote_path path
+
+                begin
+                    traverse_remote_path path
+                rescue Net::SFTP::StatusException
+                    # OK: the remote directory may be deleted with synchronization!
+                rescue Errno::ENOENT
+                    # OK: the remote directory may be deleted with synchronization!
+                end
             }
         end
 
