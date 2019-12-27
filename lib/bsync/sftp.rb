@@ -1,4 +1,5 @@
 require "bsync/core"
+require "net/sftp"
 
 module Bsync
     class Sftp < Core

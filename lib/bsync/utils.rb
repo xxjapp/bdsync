@@ -27,8 +27,11 @@ module Bsync
             "#{info.captures[0]}:#{info.captures[1]} - #{info.captures[2]}"
         end
 
-        def self.try_lock
-            File.open(__FILE__, 'r').flock(File::LOCK_EX | File::LOCK_NB)
+        def self.try_lock &block
+            File.open(__FILE__, 'r') { |f|
+                return if !f.flock(File::LOCK_EX | File::LOCK_NB)
+                yield
+            }
         end
     end
 end

@@ -23,32 +23,32 @@ module Bsync
         def synchronize
             # Run only one instance of a Ruby program at the same time - self locking
             # SEE: https://code-maven.com/run-only-one-instance-of-a-script
-            exit if !Utils.try_lock
+            Utils.try_lock {
+                loop {
+                    @old_data = load_data
+                    @data = {}
 
-            loop {
-                @old_data = load_data
-                @data = {}
+                    start_session {
+                        remote_ensure_dir @remote_root_path
+                        local_ensure_dir @local_root_path
 
-                start_session {
-                    remote_ensure_dir @remote_root_path
-                    local_ensure_dir @local_root_path
+                        puts "\n==== traverse_remote_path ===="
+                        traverse_remote_path @remote_root_path
 
-                    puts "\n==== traverse_remote_path ===="
-                    traverse_remote_path @remote_root_path
+                        # merge @data to @old_data, and clear @data
+                        @old_data.merge! @data
+                        @data     = {}
 
-                    # merge @data to @old_data, and clear @data
-                    @old_data.merge! @data
-                    @data     = {}
+                        puts "\n==== traverse_local_path ===="
+                        traverse_local_path @local_root_path
+                    }
 
-                    puts "\n==== traverse_local_path ===="
-                    traverse_local_path @local_root_path
+                    save_data @data
+
+                    break if !@infinite_loop
+
+                    sleep 1
                 }
-
-                save_data @data
-
-                break if !@infinite_loop
-
-                sleep 1
             }
         end
 
