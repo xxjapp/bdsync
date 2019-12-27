@@ -1,7 +1,7 @@
 require "bdsync/utils"
 
 RSpec.describe Bdsync::Utils do
-    it "second try lock failed" do
+    it "second try lock should failed" do
         n               = 0
         worker_count    = 2
         threads         = []

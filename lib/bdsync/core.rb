@@ -108,7 +108,12 @@ module Bdsync
 
             next_level_dirs.sort.each { |path|
                 handle_local_entry path, :directory
-                traverse_local_path path
+
+                begin
+                    traverse_local_path path
+                rescue Errno::ENOENT
+                    # OK: the local directory may be deleted with synchronization!
+                end
             }
         end
 
