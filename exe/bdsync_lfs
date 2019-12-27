@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+# Introduction:
+#   Bidirectional synchronization tool for local file system
+#
+# Usage:
+#   > bdsync_lfs --help
+#
+# Examples:
+#   > bdsync_lfs --local_root_path /tmp/local_test --remote_root_path /tmp/remote_test
+#   > bdsync_lfs -l /tmp/local_test -r /tmp/remote_test
+#
+
+require "optparse"
+require "bdsync"
+
+params = ARGV.getopts nil, *Bdsync::Lfs.options
+Bdsync::Lfs.new(params).synchronize

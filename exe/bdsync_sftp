@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+# Introduction:
+#   Bidirectional synchronization tool for sftp
+#
+# Usage:
+#   > bdsync_sftp --help
+#
+# Examples:
+#   > bdsync_sftp --site ftp.example.com --user root --local_root_path /tmp/local_test --remote_root_path /tmp/remote_test
+#   > bdsync_sftp -s ftp.example.com -u root -l /tmp/local_test -r /tmp/remote_test
+#
+# Note:
+#   > use `direct_ssh` to setup ssh authorization
+#
+
+require "optparse"
+require "bdsync"
+
+params = ARGV.getopts nil, *Bdsync::Sftp.options
+Bdsync::Sftp.new(params).synchronize
