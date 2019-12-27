@@ -34,6 +34,18 @@ RSpec.describe Bdsync do
         expect(File.file? @local_file).to eq(true)
     end
 
+    it "lfs: first-time sync file from local to remote" do
+        # setup
+        FileUtils.mkdir_p   @local_root_path
+        FileUtils.touch     @local_file
+
+        # test
+        @bdsync.synchronize
+
+        # check
+        expect(File.file? @remote_file).to eq(true)
+    end
+
     it "lfs: synchronized directory removed from remote should also removed from local" do
         # setup
         FileUtils.mkdir_p @remote_dir
