@@ -1,6 +1,6 @@
-require "bsync/utils"
+require "bdsync/utils"
 
-RSpec.describe Bsync::Utils do
+RSpec.describe Bdsync::Utils do
     it "second try lock failed" do
         n               = 0
         worker_count    = 2
@@ -8,7 +8,7 @@ RSpec.describe Bsync::Utils do
 
         worker_count.times {
             threads << Thread.new {
-                Bsync::Utils.try_lock {
+                Bdsync::Utils.try_lock {
                     n += 1
                     sleep 0.1
                 }

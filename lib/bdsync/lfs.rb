@@ -1,7 +1,7 @@
-require "bsync/core"
+require "bdsync/core"
 require "ostruct"
 
-module Bsync
+module Bdsync
     class Lfs < Core
         def initialize params
             super params, "lfs"

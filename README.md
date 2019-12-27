@@ -1,4 +1,4 @@
-# Bsync
+# Bdsync
 
 Bidirectional Synchronization tool for sftp or local file system
 
@@ -7,7 +7,7 @@ Bidirectional Synchronization tool for sftp or local file system
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'bsync'
+gem 'bdsync'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install bsync
+    $ gem install bdsync
 
 ## Usage
 
@@ -30,7 +30,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/xxjapp/bsync. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/xxjapp/bsync/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/xxjapp/bdsync. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/xxjapp/bdsync/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## License
@@ -39,4 +39,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Bsync project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/xxjapp/bsync/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Bdsync project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/xxjapp/bdsync/blob/master/CODE_OF_CONDUCT.md).

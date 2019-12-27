@@ -1,8 +1,8 @@
-require "bsync/utils"
+require "bdsync/utils"
 require "colorize"
 require "yaml"
 
-module Bsync
+module Bdsync
     class Core
         attr_reader :data_path
 
@@ -13,7 +13,7 @@ module Bsync
             @local_root_path    = params["local_root_path"]
             @remote_root_path   = params["remote_root_path"]
             @infinite_loop      = params["infinite_loop"]
-            @data_path          = "#{Dir.home}/.bsync/#{sync_type}_#{Utils.md5 params.to_s}.yaml"
+            @data_path          = "#{Dir.home}/.bdsync/#{sync_type}_#{Utils.md5 params.to_s}.yaml"
         end
 
         def self.options

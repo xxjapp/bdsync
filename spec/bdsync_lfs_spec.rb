@@ -1,8 +1,8 @@
-require "bsync"
+require "bdsync"
 
-RSpec.describe Bsync do
+RSpec.describe Bdsync do
     before :all do
-        @test_root_path     = "/tmp/bsync-test"
+        @test_root_path     = "/tmp/bdsync-test"
         @remote_root_path   = "#{@test_root_path}/remote"
         @local_root_path    = "#{@test_root_path}/local"
 
@@ -21,15 +21,15 @@ RSpec.describe Bsync do
         FileUtils.mkdir_p   @remote_root_path
         FileUtils.touch     @remote_file
 
-        bsync = Bsync::Lfs.new({
+        bdsync = Bdsync::Lfs.new({
             "remote_root_path"  => @remote_root_path,
             "local_root_path"   => @local_root_path
         })
 
-        FileUtils.rm_f bsync.data_path
+        FileUtils.rm_f bdsync.data_path
 
         # test
-        bsync.synchronize
+        bdsync.synchronize
 
         # check
         expect(File.file? @local_file).to eq(true)

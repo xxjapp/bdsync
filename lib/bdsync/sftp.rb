@@ -1,7 +1,7 @@
-require "bsync/core"
+require "bdsync/core"
 require "net/sftp"
 
-module Bsync
+module Bdsync
     class Sftp < Core
         def initialize params
             @site   = params["site"]

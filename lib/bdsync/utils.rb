@@ -1,6 +1,6 @@
 require "digest"
 
-module Bsync
+module Bdsync
     module Utils
         # Examples:
         #
