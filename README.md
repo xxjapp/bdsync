@@ -20,7 +20,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+bdsync_sftp: Bidirectional synchronization from and to a sftp server directory:
+
+```bash
+bdsync_sftp --site ftp.example.com --user root --local_root_path /tmp/local_test --remote_root_path /tmp/remote_test
+# OR
+bdsync_sftp -s ftp.example.com -u root -l /tmp/local_test -r /tmp/remote_test
+```
+
+You can use [`direct_ssh`](https://rubygems.org/gems/direct_ssh/) to setup ssh authorization if necessary.
+
+bdsync_lfs: Bidirectional synchronization from and to a local file directory:
+
+```bash
+bdsync_lfs --local_root_path /tmp/local_test --remote_root_path /tmp/remote_test
+# OR
+bdsync_lfs -l /tmp/local_test -r /tmp/remote_test
+```
 
 ## Development
 
