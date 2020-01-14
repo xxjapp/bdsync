@@ -89,5 +89,9 @@ module Bdsync
         def remote_ensure_parent path
             local_ensure_parent path
         end
+
+        def get_remote_file_md5 path
+            Utils.file_md5 path
+        end
     end
 end

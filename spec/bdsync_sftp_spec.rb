@@ -50,6 +50,36 @@ RSpec.describe Bdsync do
         expect(File.file? @remote_file).to eq(true)
     end
 
+    it "sftp: first-time sync - same content files should not conflict" do
+        # setup
+        FileUtils.mkdir_p   @local_root_path
+        FileUtils.mkdir_p   @remote_root_path
+
+        File.write @local_file, "1"
+        File.write @remote_file, "1"
+
+        # test
+        @bdsync.synchronize
+
+        # check
+        expect(File.directory? @local_root_path + "/.conflict").to eq(false)
+    end
+
+    it "sftp: first-time sync - different content files should conflict" do
+        # setup
+        FileUtils.mkdir_p   @local_root_path
+        FileUtils.mkdir_p   @remote_root_path
+
+        File.write @local_file, "1"
+        File.write @remote_file, "2"
+
+        # test
+        @bdsync.synchronize
+
+        # check
+        expect(File.directory? @local_root_path + "/.conflict").to eq(true)
+    end
+
     it "sftp: synchronized directory removed from remote should also removed from local" do
         # setup
         FileUtils.mkdir_p @remote_dir

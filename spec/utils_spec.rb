@@ -19,4 +19,13 @@ RSpec.describe Bdsync::Utils do
 
         expect(n).to be 1
     end
+
+    it "test file_md5" do
+        path = "/tmp/empty_file"
+
+        FileUtils.rm_rf path
+        File.write path, "1"
+
+        expect(Bdsync::Utils.file_md5 path).to eq "c4ca4238a0b923820dcc509a6f75849b"
+    end
 end

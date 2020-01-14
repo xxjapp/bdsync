@@ -173,8 +173,12 @@ module Bdsync
                     download_file local_path, remote_path
                     update_file_data relative_path, local_path, remote.mtime
                 else
-                    handle_local_conflict local_path
-                    download_file local_path, remote_path
+                    # compare file contents, conflict if not equal
+                    if !is_same_contents local_path, remote_path
+                        handle_local_conflict local_path
+                        download_file local_path, remote_path
+                    end
+
                     update_file_data relative_path, local_path, remote.mtime
                 end
             when :directory
@@ -202,8 +206,12 @@ module Bdsync
                     remote = upload_file local_path, remote_path
                     update_file_data relative_path, local_path, remote.mtime
                 else
-                    handle_remote_conflict remote_path
-                    remote = upload_file local_path, remote_path
+                    # compare file contents, conflict if not equal
+                    if !is_same_contents local_path, remote_path
+                        handle_remote_conflict remote_path
+                        remote = upload_file local_path, remote_path
+                    end
+
                     update_file_data relative_path, local_path, remote.mtime
                 end
             when :directory
@@ -260,12 +268,20 @@ module Bdsync
                         update_file_data relative_path, local_path, remote.mtime
                     else
                         if File.mtime(local_path).to_i > remote.mtime
-                            handle_remote_conflict remote_path
-                            remote = upload_file local_path, remote_path
+                            # compare file contents, conflict if not equal
+                            if !is_same_contents local_path, remote_path
+                                handle_remote_conflict remote_path
+                                remote = upload_file local_path, remote_path
+                            end
+
                             update_file_data relative_path, local_path, remote.mtime
                         else
-                            handle_local_conflict local_path
-                            download_file local_path, remote_path
+                            # compare file contents, conflict if not equal
+                            if !is_same_contents local_path, remote_path
+                                handle_local_conflict local_path
+                                download_file local_path, remote_path
+                            end
+
                             update_file_data relative_path, local_path, remote.mtime
                         end
                     end
@@ -339,12 +355,20 @@ module Bdsync
                         update_file_data relative_path, local_path, remote.mtime
                     else
                         if File.mtime(local_path).to_i > remote.mtime
-                            handle_remote_conflict remote_path
-                            remote = upload_file local_path, remote_path
+                            # compare file contents, conflict if not equal
+                            if !is_same_contents local_path, remote_path
+                                handle_remote_conflict remote_path
+                                remote = upload_file local_path, remote_path
+                            end
+
                             update_file_data relative_path, local_path, remote.mtime
                         else
-                            handle_local_conflict local_path
-                            download_file local_path, remote_path
+                            # compare file contents, conflict if not equal
+                            if !is_same_contents local_path, remote_path
+                                handle_local_conflict local_path
+                                download_file local_path, remote_path
+                            end
+
                             update_file_data relative_path, local_path, remote.mtime
                         end
                     end
@@ -436,6 +460,12 @@ module Bdsync
 
         def local_ensure_parent path
             local_ensure_dir File.dirname path
+        end
+
+        def is_same_contents local_path, remote_path
+            local_file_md5 = Utils.file_md5 local_path
+            remote_file_md5 = get_remote_file_md5 remote_path
+            local_file_md5 == remote_file_md5
         end
     end
 end

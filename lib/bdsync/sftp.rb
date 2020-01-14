@@ -82,5 +82,11 @@ module Bdsync
         def remote_ensure_parent path
             remote_ensure_dir File.dirname path
         end
+
+        def get_remote_file_md5 remote_path
+            puts "#{Utils.caller_info 1} sftp.session.exec! md5sum #{remote_path}".white
+            res = @sftp.session.exec! "md5sum #{remote_path}"
+            res.split[0]
+        end
     end
 end

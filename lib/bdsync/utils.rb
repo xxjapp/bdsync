@@ -22,6 +22,10 @@ module Bdsync
             Digest::MD5.hexdigest(s)
         end
 
+        def self.file_md5 file_path
+            Digest::MD5.file(file_path).hexdigest
+        end
+
         def self.caller_info level
             info = caller[level].match(%r{([^/]+):(\d+):in `(.+)'})
             "#{info.captures[0]}:#{info.captures[1]} - #{info.captures[2]}"
