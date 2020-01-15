@@ -101,9 +101,18 @@ module Bdsync
         end
 
         def get_remote_file_md5 remote_path
-            puts "#{Utils.caller_info 1} sftp.session.exec! md5sum #{remote_path}".white
-            res = @sftp.session.exec! "md5sum #{remote_path}"
-            res.split[0]
+            puts "#{Utils.caller_info 1} get_remote_file_md5 #{remote_path}".white
+
+            tmpfile = Tempfile.new 'sftp.rb-get_remote_file_md5-'
+
+            begin
+                tmpfile.close
+
+                @sftp.download! remote_path, tmpfile.path
+                Utils.file_md5 tmpfile.path
+            ensure
+                tmpfile.unlink  # deletes the temp file
+            end
         end
 
         # for test
@@ -113,7 +122,7 @@ module Bdsync
             begin
                 tmpfile.write content
                 tmpfile.flush
-                
+
                 @sftp.upload! tmpfile.path, remote_path
             ensure
                 tmpfile.close
