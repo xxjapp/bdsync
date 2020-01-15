@@ -24,8 +24,8 @@ RSpec.describe Bdsync do
 
     it "lfs: first-time sync file from remote to local" do
         # setup
-        FileUtils.mkdir_p   @remote_root_path
-        FileUtils.touch     @remote_file
+        @bdsync.remote_ensure_dir   @remote_root_path
+        @bdsync.create_remote_file  @remote_file, ""
 
         # test
         @bdsync.synchronize
@@ -48,11 +48,11 @@ RSpec.describe Bdsync do
 
     it "lfs: first-time sync - same content files should not conflict" do
         # setup
-        FileUtils.mkdir_p   @local_root_path
-        FileUtils.mkdir_p   @remote_root_path
+        FileUtils.mkdir_p           @local_root_path
+        @bdsync.remote_ensure_dir   @remote_root_path
 
-        File.write @local_file, "1"
-        File.write @remote_file, "1"
+        File.write                  @local_file, "1"
+        @bdsync.create_remote_file  @remote_file, "1"
 
         # test
         @bdsync.synchronize
@@ -63,11 +63,11 @@ RSpec.describe Bdsync do
 
     it "lfs: first-time sync - different content files should conflict" do
         # setup
-        FileUtils.mkdir_p   @local_root_path
-        FileUtils.mkdir_p   @remote_root_path
+        FileUtils.mkdir_p           @local_root_path
+        @bdsync.remote_ensure_dir   @remote_root_path
 
-        File.write @local_file, "1"
-        File.write @remote_file, "2"
+        File.write                  @local_file, "1"
+        @bdsync.create_remote_file  @remote_file, "2"
 
         # test
         @bdsync.synchronize
@@ -78,7 +78,7 @@ RSpec.describe Bdsync do
 
     it "lfs: synchronized directory removed from remote should also removed from local" do
         # setup
-        FileUtils.mkdir_p @remote_dir
+        @bdsync.remote_ensure_dir @remote_dir
 
         # test
         @bdsync.synchronize
@@ -87,7 +87,7 @@ RSpec.describe Bdsync do
         expect(File.directory? @local_dir).to eq(true)
 
         # test
-        FileUtils.rm_rf @remote_dir
+        @bdsync.remote_remove_dir @remote_dir
         @bdsync.synchronize
 
         # check
@@ -96,7 +96,7 @@ RSpec.describe Bdsync do
 
     it "lfs: synchronized directory removed from local should also removed from remote" do
         # setup
-        FileUtils.mkdir_p @remote_dir
+        @bdsync.remote_ensure_dir @remote_dir
 
         # test
         @bdsync.synchronize

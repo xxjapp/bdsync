@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bdsync (2.2.0)
+    bdsync (2.3.0)
       colorize (~> 0.8)
       net-sftp (~> 2.1)
 

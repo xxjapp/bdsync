@@ -11,10 +11,6 @@ module Bdsync
             Core.options
         end
 
-        def start_session &block
-            yield
-        end
-
         # yield object like this
         # {
         #   name:
@@ -92,6 +88,11 @@ module Bdsync
 
         def get_remote_file_md5 path
             Utils.file_md5 path
+        end
+
+        # for test
+        def create_remote_file remote_path, content
+            File.write remote_path, content
         end
     end
 end

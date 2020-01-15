@@ -28,20 +28,18 @@ module Bdsync
                     @old_data = load_data
                     @data = {}
 
-                    start_session {
-                        remote_ensure_dir @remote_root_path
-                        local_ensure_dir @local_root_path
+                    remote_ensure_dir @remote_root_path
+                    local_ensure_dir @local_root_path
 
-                        puts "\n==== traverse_remote_path ===="
-                        traverse_remote_path @remote_root_path
+                    puts "\n==== traverse_remote_path ===="
+                    traverse_remote_path @remote_root_path
 
-                        # merge @data to @old_data, and clear @data
-                        @old_data.merge! @data
-                        @data     = {}
+                    # merge @data to @old_data, and clear @data
+                    @old_data.merge! @data
+                    @data     = {}
 
-                        puts "\n==== traverse_local_path ===="
-                        traverse_local_path @local_root_path
-                    }
+                    puts "\n==== traverse_local_path ===="
+                    traverse_local_path @local_root_path
 
                     save_data @data
 
@@ -50,10 +48,6 @@ module Bdsync
                     sleep 1
                 }
             }
-        end
-
-        def start_session &block
-            fail NotImplementedError, "A subclass class must be able to #{__method__}!"
         end
 
         def load_data
